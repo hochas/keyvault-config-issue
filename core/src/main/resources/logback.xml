@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<if condition='"${spring.profiles.active}".contains("development")'>
+		<then>
+			<include
+				resource="org/springframework/boot/logging/logback/base.xml" />
+		</then>
+		<else>
+			<include resource="logback-json.xml" />
+		</else>
+	</if>
+</configuration>

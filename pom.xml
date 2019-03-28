@@ -1,0 +1,353 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.demo</groupId>
+	<artifactId>keyvault-parent</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.2.RELEASE</version>
+		<relativePath />
+		<!-- lookup parent from repository -->
+	</parent>
+
+	<modules>
+		<module>core</module>
+	</modules>
+
+	<properties>
+		<!-- JDK properties -->
+		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<!-- Maven Settings -->
+		<m2e.apt.activation>disabled</m2e.apt.activation>
+
+		<!-- Azure properties -->
+		<azure-spring-boot-bom.version>2.1.6</azure-spring-boot-bom.version>
+		<iot-device-client.version>1.15.0</iot-device-client.version>
+		<iot-service-client.version>1.16.0</iot-service-client.version>
+		<x509-provider.version>1.1.2</x509-provider.version>
+		<provisioning-device-client.version>1.4.0</provisioning-device-client.version>
+		<azure-data-lake-store-sdk.version>2.3.3</azure-data-lake-store-sdk.version>
+		<azure-keyvault.version>1.2.0</azure-keyvault.version>
+
+		<!-- Misc -->
+		<commons-net.version>3.6</commons-net.version>
+		<commons-io.version>2.6</commons-io.version>
+		<commons-logging.version>1.2</commons-logging.version>
+		<logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
+		<lombok.version>1.18.6</lombok.version>
+
+		<!-- Reporting -->
+		<spotbugs.version>3.1.11</spotbugs.version>
+		<maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+		<jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
+		<spotbugs-maven-plugin.version>3.1.11</spotbugs-maven-plugin.version>
+		<maven-surefire-report-plugin.version>3.0.0-M3</maven-surefire-report-plugin.version>
+		<maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
+		<maven-jxr-plugin.version>3.0.0</maven-jxr-plugin.version>
+		<jacoco.reportPath>${project.basedir}/../target/jacoco.exec</jacoco.reportPath>
+
+		<!-- Test -->
+		<MockFtpServer.version>2.7.1</MockFtpServer.version>
+		<junit5-system-exit.version>1.0.0</junit5-system-exit.version>
+		<jacoco.minimumCoverage>0.60</jacoco.minimumCoverage>
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Azure -->
+			<dependency>
+				<groupId>com.microsoft.azure.sdk.iot</groupId>
+				<artifactId>iot-device-client</artifactId>
+				<version>${iot-device-client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.microsoft.azure.sdk.iot</groupId>
+				<artifactId>iot-service-client</artifactId>
+				<version>${iot-service-client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.microsoft.azure.sdk.iot.provisioning.security</groupId>
+				<artifactId>x509-provider</artifactId>
+				<version>${x509-provider.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.microsoft.azure.sdk.iot.provisioning</groupId>
+				<artifactId>provisioning-device-client</artifactId>
+				<version>${provisioning-device-client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-data-lake-store-sdk</artifactId>
+				<version>${azure-data-lake-store-sdk.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-spring-boot-bom</artifactId>
+				<version>${azure-spring-boot-bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Misc -->
+			<dependency>
+				<groupId>commons-net</groupId>
+				<artifactId>commons-net</artifactId>
+				<version>${commons-net.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>${commons-logging.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.logstash.logback</groupId>
+				<artifactId>logstash-logback-encoder</artifactId>
+				<version>${logstash-logback-encoder.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<!-- Test -->
+			<dependency>
+				<groupId>org.mockftpserver</groupId>
+				<artifactId>MockFtpServer</artifactId>
+				<version>${MockFtpServer.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.ginsberg</groupId>
+				<artifactId>junit5-system-exit</artifactId>
+				<version>${junit5-system-exit.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<executions>
+						<execution>
+							<id>copy-config</id>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<phase>process-test-resources</phase>
+							<configuration>
+								<overwrite>true</overwrite>
+								<outputDirectory>config</outputDirectory>
+								<resources>
+									<resource>
+										<directory>../config</directory>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+						<execution>
+							<id>copy-test-resources</id>
+							<goals>
+								<goal>testResources</goal>
+							</goals>
+							<configuration>
+								<overwrite>true</overwrite>
+								<outputDirectory>src/test/resources</outputDirectory>
+								<resources>
+									<resource>
+										<directory>../src/test/resources</directory>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>com.github.spotbugs</groupId>
+					<artifactId>spotbugs-maven-plugin</artifactId>
+					<version>${spotbugs-maven-plugin.version}</version>
+					<configuration>
+						<excludeFilterFile>
+							src/test/resources/spotbugs_exclude_filter.xml
+						</excludeFilterFile>
+					</configuration>
+					<executions>
+						<execution>
+							<id>check</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+							<configuration>
+							</configuration>
+						</execution>
+					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>com.github.spotbugs</groupId>
+							<artifactId>spotbugs</artifactId>
+							<version>${spotbugs.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco-maven-plugin.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>jacoco-check</id>
+							<goals>
+								<goal>check</goal>
+							</goals>
+							<phase>test</phase>
+							<configuration>
+								<rules>
+									<rule>
+										<element>BUNDLE</element>
+										<limits>
+											<limit>
+												<counter>INSTRUCTION</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>${jacoco.minimumCoverage}</minimum>
+											</limit>
+										</limits>
+									</rule>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
+				<inherited>false</inherited>
+				<configuration>
+					<siteDirectory>${session.executionRootDirectory}/src/site</siteDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>${maven-jxr-plugin.version}</version>
+				<reportSets>
+					<reportSet>
+						<id>aggregate</id>
+						<inherited>false</inherited>
+						<reports>
+							<report>aggregate</report>
+							<report>test-aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven-project-info-reports-plugin.version}</version>
+				<configuration>
+					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>summary</report>
+							<report>index</report>
+							<report>team</report>
+							<report>scm</report>
+							<report>modules</report>
+							<report>dependency-info</report>
+							<report>distribution-management</report>
+							<report>issue-management</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>${spotbugs-maven-plugin.version}</version>
+				<configuration>
+					<excludeFilterFile>
+						src/test/resources/spotbugs_exclude_filter.xml
+					</excludeFilterFile>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${maven-surefire-report-plugin.version}</version>
+				<configuration>
+					<aggregate>true</aggregate>
+					<linkXRef>true</linkXRef>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven-checkstyle-plugin.version}</version>
+				<configuration>
+					<configLocation>src/test/resources/sun_checks.xml</configLocation>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>aggregate</id>
+						<inherited>false</inherited>
+						<reports>
+							<report>checkstyle-aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-maven-plugin.version}</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>report-aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+
+</project>
