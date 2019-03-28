@@ -55,7 +55,9 @@ public class Application {
             final PropertySource propertySource = (PropertySource) it.next();
             System.out.println(propertySource.getClass());
             if (propertySource instanceof EnumerablePropertySource) {
-                Arrays.stream(((EnumerablePropertySource) propertySource).getPropertyNames()).forEach(System.out::println);
+                Arrays.stream(((EnumerablePropertySource) propertySource).getPropertyNames()).forEach(n -> {
+                    System.out.println(n + "=" + propertySource.getProperty(n));
+                });
             }
         }
     }
